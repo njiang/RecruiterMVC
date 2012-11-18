@@ -1,0 +1,41 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace TestHireChannelMVC.Controllers
+{
+    public class RecruiterController1 : Controller
+    {
+        //
+        // GET: /Recruiter/
+
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        public ActionResult PostJob()
+        {
+            Models.Job job = new Models.Job();
+            Models.RecruiterJobSeeker.JobUserSkillModel jsm = new Models.RecruiterJobSeeker.JobUserSkillModel(job);
+            return View(jsm);
+        }
+
+        [HttpPost]
+        public ActionResult PostJob(TestHireChannelMVC.Models.Job model, string returnUrl)
+        {
+            if (ModelState.IsValid)
+            {
+                Guid jobID = Guid.NewGuid();
+                model.JobID = jobID;
+                model.UserID = new Guid((string)TempData["UserID"]);
+                Models.LinqModelHelperDataContext dataContext = new Models.LinqModelHelperDataContext();
+                dataContext.Jobs.InsertOnSubmit(model);
+                dataContext.SubmitChanges();
+            }
+            return View(model);
+        }
+    }
+}

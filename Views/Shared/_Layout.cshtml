@@ -1,0 +1,171 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css" />
+    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/akottr.css")" rel="stylesheet" type="text/css" />
+    @*<link href="@Url.Content("~/Content/reset.css")" rel="stylesheet" type="text/css" />*@
+    
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/ui/1.9.0/jquery-ui.js"></script>
+    
+    
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.tablednd.0.7.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/tablecelldrag.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.jeditable.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.dragtable.js")"></script> 
+    <script src="@Url.Content("~/Scripts/modernizr-1.7.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/MicrosoftAjax.js")" type="text/javascript"></script> 
+    <script src="@Url.Content("~/Scripts/MicrosoftMvcAjax.js")" type="text/javascript"></script>
+
+    <script>
+        $(function () {
+
+            
+
+            $('#tblBoard').dragtable({ dragHandle: '.columnhandle' });
+
+            $('.editable').editable('/Recruiter1/EditCell', { method: "post", placeholder: "", onblur: "submit" });
+
+            REDIPS.drag.init();
+
+            $(".draggable").draggable();
+
+            $("#tblBoard").tableDnD(
+                {
+                    onDragClass: "myDragClass",
+                    onDrop: function (table, row) {
+                        alert("ondrop");
+                        var rows = table.tBodies[0].rows;
+                        alert(rows);
+                        var debugStr = "Row dropped was " + row.id + ". New order: ";
+                        for (var i = 0; i < rows.length; i++) {
+                            debugStr += rows[i].id + " ";
+                        }
+                        alert(debugStr);
+                        //$(#debugArea).html(debugStr);
+                    },
+                    onDragStart: function (table, row) {
+                        //$(#debugArea).html("Started dragging row "+row.id);
+                    }
+                }
+            );
+
+
+
+            $('#tblBoard').droppable(
+                    {
+                        drop: componentDropEvent
+                    }
+                );
+
+            $("#SearchForm").submit(function () {
+                // get the form
+                var f = $("#SearchForm");
+                var action = f.attr("action");
+                var serializeForm = f.serialize();
+                $.post(action, serializeForm,
+                                function (data) {
+                                    //alert(data);
+                                    $("#divMain").html(data);
+                                });
+                return false;
+            });
+
+            //            $('#tblBoard').selectable({
+            //                filter: 'tbody tr',
+            //                stop: function (event, ui) {
+            //                    $(this).find("tr.ui-draggable").draggable("destroy");
+            //                    $(this).find("tr.ui-selected").draggable({
+            //                        helper: function () {
+            //                            return $("<table></table>")
+            //                      .append(
+            //                            $(this).closest("tbody")
+            //                              .find("tr.ui-selected").clone()
+            //                          )[0];
+            //                        },
+            //                        appendTo: "body"
+            //                    });
+            //                }
+            //            });
+
+
+        })
+    </script>
+</head>
+<body>
+<div class="page">
+<header>
+    <div id="title">
+        <h1>JobPrompy</h1>
+    </div>
+    <div id="logindisplay">
+        @Html.Partial("_LogOnPartial")
+        <script type="in/Login">
+        Hello, <?js= firstName ?> <?js= lastName ?>.
+        </script>
+    </div>
+    <div id="divPinnedUser" style="display: none">
+        You have been pinned by a recruiter!
+    </div>
+    <nav>
+        <ul id="menu">
+            @if (Request.IsAuthenticated)   {
+                <li>
+                <form id="SearchForm" action= "@Url.Action("SearchForm")" method="post" style="border-style:none">
+                    <fieldset>
+                    <input type="hidden" id="username" name="username" value="@TempData["Username"]" />
+                    <input type="text" id="searchterm" name="searchterm" /> 
+                    <p><input type="submit" value="Search" /></p>
+                    </fieldset>
+                </form>
+                </li>
+            }
+
+
+            @if (Request.IsAuthenticated)  {
+                if (Model != null && Model.User.UserType == 1)
+                {
+                    <li>@Ajax.ActionLink("My Posted Jobs", "ListPostedJobs", "Recruiter1", new { username = (string)Model.User.Login }, new AjaxOptions() { HttpMethod = "Get", UpdateTargetId = "divMain" })</li>
+                    <li>@Html.ActionLink("My Messages", "ListRecruiterMessages", "Recruiter1")</li>
+                }
+
+                if (Model != null && Model.User.UserType == 2)
+                {
+                    <li>@Ajax.ActionLink("My Applied Jobs", "ListAppliedJobs", "Jobseeker", new { username = (string)Model.User.Login }, new AjaxOptions() { HttpMethod = "Get", UpdateTargetId = "divMain" }) </li>
+                        @*@Html.ActionLink("My Applied Jobs", "ListAppliedJobs", "JobSeeker")</li>*@
+                    <li>@Ajax.ActionLink("My Pinned Jobs", "ListPinnedJobs", "Jobseeker", new { username = (string)Model.User.Login }, new AjaxOptions() { HttpMethod = "Get", UpdateTargetId = "divMain" })</li>
+                    <li>@Ajax.ActionLink("My Recruiters", "ListFollowingRecruiters", "Jobseeker", new { username = (string)Model.User.Login }, new AjaxOptions() { HttpMethod = "Get", UpdateTargetId = "divMain" })</li>
+                    <li>@Ajax.ActionLink("My Messages", "ListMessages", "Jobseeker", new { username = (string)Model.User.Login }, new AjaxOptions() { HttpMethod = "Get", UpdateTargetId = "divMain" })</li>                        
+                }
+            }
+            else
+            {
+                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                <li>@Html.ActionLink("About", "About", "Home")</li>
+            }
+        </ul>
+    </nav>
+</header>
+<section id="main">
+    <div id="divSearch">
+        @if (Request.IsAuthenticated)
+        {
+            if (Model != null && Model.SearchResult != null)
+            {
+                Html.Partial("_SearchResult", (TestHireChannelMVC.Models.RecruiterJobSeeker.SearchResultModel)Model.SearchResult);
+            }
+        }
+    </div>
+    <div id="divMain">
+    @RenderBody()
+    </div> 
+</section> 
+</body>
+</html>
+
+
+

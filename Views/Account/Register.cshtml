@@ -1,0 +1,127 @@
+﻿@model TestHireChannelMVC.Models.RegisterModel
+
+@{
+    ViewBag.Title = "Register";
+}
+
+<h2>Create a New Account</h2>
+<p>
+    Use the form below to create a new account. 
+</p>
+<p>
+    Passwords are required to be a minimum of @Membership.MinRequiredPasswordLength characters in length.
+</p>
+
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+<script type="text/javascript">
+    function AddSkill() {
+        var index = parseInt($("#skillIndex").val()) + 1;
+        $("#skillIndex").val(index);
+        alert($("#divSkills").html());
+        var skillid = "Skill" + String(index);
+        var yearid = "Year" + String(index);
+        alert(skillid);
+
+        $("#divSkills").append("Skill: <input type='text' id='" + skillid + "' name='" + skillid + "' style=width:100px />  ");
+        $("#divSkills").append("Year: <input type='text' id='" + yearid + "' name='" + yearid + "' style='width:100px' /><br />");
+    }
+</script>
+
+
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true, "Account creation was unsuccessful. Please correct the errors and try again.")
+    <div>
+        <fieldset>
+            <legend>Account Information</legend>
+
+            <div class="editor-label">
+                @Html.LabelFor(m => m.UserName)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(m => m.UserName)
+                @Html.ValidationMessageFor(m => m.UserName)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(m => m.Email)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(m => m.Email)
+                @Html.ValidationMessageFor(m => m.Email)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(m => m.Password)
+            </div>
+            <div class="editor-field">
+                @Html.PasswordFor(m => m.Password)
+                @Html.ValidationMessageFor(m => m.Password)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(m => m.ConfirmPassword)
+            </div>
+            <div class="editor-field">
+                @Html.PasswordFor(m => m.ConfirmPassword)
+                @Html.ValidationMessageFor(m => m.ConfirmPassword)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(m => m.UserType)
+            </div>
+            <div class="editor-field">
+                @Html.DropDownListFor(m => m.UserType, Model.UserTypes, "[ None ]"), 
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(m => m.City)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(m => m.City)
+                @Html.ValidationMessageFor(m => m.City)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(m => m.State)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(m => m.State)
+                @Html.ValidationMessageFor(m => m.State)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(m => m.Country)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(m => m.Country)
+                @Html.ValidationMessageFor(m => m.Country)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(m => m.Zip)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(m => m.Zip)
+                @Html.ValidationMessageFor(m => m.Zip)
+            </div>
+            
+            <div class="editor-label">
+                @Html.LabelFor(m => m.WillingToRelocate)
+            </div>
+            <div class="editor-field">
+                @Html.DropDownListFor(m => m.WillingToRelocate, Model.WillingToRelocateSet, "[ None ]"), 
+            </div>
+
+            <input id="skillIndex" type="hidden" name="skillIndex" value="1" /><br />
+            <div class='editor-label' id='divSkills'>
+                Skill: <input type="text" id="Skill1" name="Skill1" style="width: 100px" />  Year: <input type="text" id="Year1" name="Year1" style="width: 100px" /> <input type="button" id="btnAddSkill" value="Add" onclick="javascript:AddSkill();" /> <br />
+            </div>
+            <p>
+                <input type="submit" value="Register" />
+            </p>
+        </fieldset>
+    </div>
+}

@@ -1,0 +1,50 @@
+﻿
+@model TestHireChannelMVC.Models.RecruiterJobSeeker.SearchResultModel
+
+@if (Model != null)
+{
+<table>
+    <tr>
+        <th>
+            Job Title
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Skills
+        </th>
+    </tr>
+
+    @if (Model.Jobs != null)    {
+
+    foreach (var item in Model.Jobs)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        @*<td>
+        @foreach (var skill in item.Skills) {
+            <div>
+            @Html.DisplayFor(skillItem => skill.Skill)
+            </div>
+            <div>
+            @Html.DisplayFor(skillItem => skill.Year)
+            </div>
+        }
+        </td>*@
+    </tr>
+    }
+    }
+
+</table>
+}
+    
+
+
+
+

@@ -1,0 +1,57 @@
+﻿@{
+    ViewBag.Title = "PostJob";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model TestHireChannelMVC.Models.RecruiterJobSeeker.JobUserSkillModel
+           
+<h2>PostJob</h2>
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <legend>Job</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Job.Title)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Job.Title)
+            @Html.ValidationMessageFor(model => model.Job.Title)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Job.Employer)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Job.Employer)
+            @Html.ValidationMessageFor(model => model.Job.Employer)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Job.Description)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Job.Description)
+            @Html.ValidationMessageFor(model => model.Job.Description)
+        </div>
+        
+        <div id="divSkills">
+            @*@foreach (var item in Model.Skills) { 
+                Skill:  @Html.DisplayFor(modelItem => item.Skill)   Year:  @Html.DisplayFor(modelItem => item.Year)*@
+            <div class="editor-label">
+                @Html.LabelFor(model => model.AdditionalSkill.Skill):
+                @Html.EditorFor(model => model.AdditionalSkill.Skill)
+                @Html.ValidationMessageFor(model => model.AdditionalSkill.Skill)  
+
+                @Html.LabelFor(model => model.AdditionalSkill.Year):
+                @Html.EditorFor(model => model.AdditionalSkill.Year)
+                @Html.ValidationMessageFor(model => model.AdditionalSkill.Year) 
+                <input id="AddBtn1" name="AddBtn" value="Add" />
+            </div>
+            
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}

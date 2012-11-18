@@ -1,0 +1,40 @@
+﻿@model TestHireChannelMVC.Models.User
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>User</legend>
+
+    <div class="display-label">LastName</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.LastName)
+    </div>
+
+    <div class="display-label">FirstName</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.FirstName)
+    </div>
+
+    <div class="display-label">LastLogin</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.LastLogin)
+    </div>
+
+    <div class="display-label">LoginName</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.LoginName)
+    </div>
+
+    <div class="display-label">UserType</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.UserType)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.UserID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

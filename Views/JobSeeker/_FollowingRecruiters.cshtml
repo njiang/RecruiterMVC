@@ -1,0 +1,25 @@
+﻿@model TestHireChannelMVC.Models.RecruiterJobSeeker.JobSeekerModel
+
+<h2>Recruiters I'm following</h2>
+<table>
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Email
+        </th>
+    </tr>
+
+@foreach (var item in Model.FollowingRecruiters) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Login)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+    </tr>
+}
+
+</table>

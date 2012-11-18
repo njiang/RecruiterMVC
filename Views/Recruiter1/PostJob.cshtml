@@ -1,0 +1,40 @@
+﻿@model TestHireChannelMVC.Models.RecruiterJobSeeker.JobUserSkillModel
+
+@{
+    ViewBag.Title = "PostJob";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+function AddSkill() {
+    var index = parseInt($("#skillIndex").val()) + 1;
+    $("#skillIndex").val(index);
+    //alert($("#divSkills").html());
+    var skillid = "Skill" + String(index);
+    var yearid = "Year" + String(index);
+    //alert(skillid);
+    
+    $("#divSkills").append("Skill: <input type='text' id='" + skillid + "' name='" + skillid + "' style=width:100px />  ");
+    $("#divSkills").append("Year: <input type='text' id='" + yearid + "' name='"+ yearid +"' style='width:100px' /><br />");
+    }
+</script>
+
+<h2>PostJob</h2>
+<form id="PostJob" action= "@Url.Action("PostNewJob", "Recruiter1")" method="post" style="border-style:none">    
+        <input type="hidden" id="username" name="username" value="@TempData["Username"]" /><br />
+        <input type="hidden" id="userid" name="userid" value="@TempData["UserID"]" /><br />
+        Title: <input type="text" id="Title" name="Title" /> <br />
+        Description: <input type="text" id="Description" name="Description" /><br /> 
+        Employer: <input type="text" id="Employer" name="Employer" /><br />
+        City: <input type="text" id="City" name="City" /><br />
+        State: <input type="text" id="State" name="State" /><br />
+        Zip: <input type="text" id="Zip" name="Zip" /><br />
+        <input id="skillIndex" type="hidden" name="skillIndex" value="1" /><br />
+        <div class='editor-label' id='divSkills'>
+        Skill: <input type="text" id="Skill1" name="Skill1" style="width: 100px" />  Year: <input type="text" id="Year1" name="Year1" style="width: 100px" /> <input type="button" id="btnAddSkill" value="Add" onclick="javascript:AddSkill();" /> <br />
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+</form>

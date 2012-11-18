@@ -1,0 +1,50 @@
+﻿
+@model TestHireChannelMVC.Models.RecruiterJobSeeker.SearchResultModel
+
+<table>
+    <tr>
+        <th>
+            Username
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
+            Skills
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.Users) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Login)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+        </td>
+        <td>
+            @Ajax.ActionLink("Pin", "PinUser", "Recruiter1", new { recruiterID = Model.User.UserID, userID = item.UserID, jobID = Model.Job.JobID }, new AjaxOptions() { HttpMethod = "Get" })
+        </td>
+        @*<td>
+        @foreach (var skill in item.Skills) {
+            <div>
+            @Html.DisplayFor(skillItem => skill.Skill)
+            </div>
+            <div>
+            @Html.DisplayFor(skillItem => skill.Year)
+            </div>
+        }
+        </td>*@
+    </tr>
+}
+
+</table>
+
+    
+
+
+
+

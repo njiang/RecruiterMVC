@@ -1,0 +1,267 @@
+﻿@model TestHireChannelMVC.Models.RecruiterJobSeeker.RecruiterModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<script type="text/javascript">
+    window.setInterval(function () {
+        // Send an AJAX request every 5s to poll for changes and update the UI 
+        // example with jquery: 
+        $.get('RetreiveChanges', function (result) {
+            // TODO: use the results returned from your controller action 
+            // to update the UI 
+        });
+    }, 5000); 
+</script>*@
+
+<script type="text/javascript">
+    function OnEdit() {
+        alert("editing");
+    }
+
+    function addStage()
+    {
+//        var currentNumberOfTDsInARow = $('.tblBoard tr:first td').length;
+//        newColNum = currentNumberOfTDsInARow;
+//        var rows = $('.tblBoard tbody tr');
+//        for (var i = 0; i < rows.length; i++) {
+//    	    var lastTDClone = $(rows[i]).find('td:last').clone();
+//    	    $(rows[i]).find('td:last').after(lastTDClone);
+//        }
+        //alert("Add a stage");
+        $("#tblBoard tr:first").append("<th class='editable'>New Stage</th>");
+        $("#tblBoard tr:gt(0)").append("<td class='editable'></td>");
+        $('.editable').editable('/Recruiter1/EditCell', { method : "post", placeholder: "", onblur: "submit" });
+    }
+
+    function addRow() {
+        alert("Add row");
+        var rowstring = "<tr>";
+        var colcnt = 0;
+        $("#tblBoard tr:last").children().each(function () {
+            colcnt++;
+        }
+        );
+        for (var i = 0; i < colcnt; i++) {
+            if (i == 0)
+                rowstring += "<td class='editable'>New position</td>";
+            else
+                rowstring += "<td class='editable'></td>";
+        }
+        rowstring += "</tr>";
+        //alert(rowstring);
+        $("#tblBoard").append(rowstring);
+        $('.editable').editable('/Recruiter1/EditCell', { method : "post", placeholder: "", onblur: "submit" });
+    }
+
+    function saveBoard() {
+        var jsonObj = {};
+        var board = [];
+        //var columns = [];
+        //var cells = [];
+        // Get the table head
+        var columnindex = 0;
+        var rowindex = 0;
+        $("#tblBoard tr").each(function () {
+            //var cell = $(this).find("td").eq(0);
+            var cell = ($(this).children())[0];
+            var rowid = $(this).attr("id");
+            columnindex = 0;
+            while (cell != undefined) {
+                //alert(columnindex + ": " + cell);
+                if (rowindex == 0) {
+                    //alert(($(cell).children())[1]);
+                    var divStage = ($(cell).children())[1]; // This child has the name of the column
+                    //alert($(divStage).html());
+                    var element = {};
+                    element.value = $(divStage).html();
+                    element.row = 0;
+                    element.col = columnindex;
+                    board.push(element);
+                    //columnObj["column" + columnindex.toString()] = $(divStage).html();
+                }
+                else {
+                    var cellhtml = $(cell).html();
+                    var element = {};
+                    element.row = rowindex;
+                    element.col = columnindex;
+                    if (columnindex == 0) // The first column of the row stores the rowid
+                        element.rowid = (rowid != undefined) ? rowid : "";
+                    var cellid = $(cell).attr("id");
+                    element.cellid = (cellid != undefined) ? cellid : "";
+                    //alert(cellhtml);
+                    if (cellhtml.indexOf("<div") >= 0) {
+                        var candidatediv = ($(cell).children())[0];
+                        //alert($(candidatediv).html());
+                        //cells["r" + rowindex + "c" + columnindex] = $(candidatediv).html();
+                        element.value = $(candidatediv).html();
+                    }
+                    else {
+                        //cells["r" + rowindex + "c" + columnindex] = $(cell).html();
+                        element.value = $(cell).html();
+                    }
+                    board.push(element);
+                }
+                columnindex++;
+                cell = ($(this).children())[columnindex];
+            }
+            rowindex++;
+        });
+
+       
+        //jsonObj.Stages = ["Stages"]; //columnObj;
+        //jsonObj.Positions = "Positions"; // cells;
+        jsonObj.BoardID = "cf1b036e-742d-4eff-8bb4-a0a78030c6bd";
+        jsonObj.Board = board;
+        
+        var jsonBoard = JSON.stringify(jsonObj);
+        alert(jsonBoard);
+
+        jQuery.ajax({
+            url: "/Recruiter1/SaveBoard",
+            type: "POST",
+            data: jsonBoard, //({"name": "workflow", "desc": "Hello World", "userid": "1"}),
+            contentType: "application/json; charset=UTF-8",
+            traditional: true,
+            dataType: "json",
+//            beforeSend: function (x) {
+//                if (x && x.overrideMimeType) {
+//                    x.overrideMimeType("application/json;charset=UTF-8");
+//                }
+//            },
+            success: function (result) {
+                //Write your code here
+                //alert(result['id']);
+                //alert(($("#divWorkflow").children().length));
+//                var link = "<li><a href='" + "javascript:GetWorkflow(\"" + result['id'] + "\")'>" + result['name'] + "</a></li>";
+//                alert(link);
+//                var ul = ($("#divWorkflow").children())[0]; // TODO use jquery to get the ul
+//                $(ul).append(link);
+                //                $('currentworkflowid').attr("value", result['id']);
+                
+            }
+        });
+
+    }
+</script>
+
+<h2>UserView</h2>
+
+<table>
+    <tr>
+        <th>
+            LastName
+        </th>
+        <th>
+            FirstName
+        </th>
+        <th>
+            LastLogin
+        </th>
+        <th>
+            LoginName
+        </th>
+        <th>
+            UserType
+        </th>
+        <th></th>
+    </tr>
+
+    <tr>
+        <td>
+            @Html.DisplayFor(m => m.User.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(m => m.User.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(m => m.User.LastLogin)
+        </td>
+        <td>
+            @Html.DisplayFor(m => m.User.Login)
+        </td>
+        <td>
+            @Html.DisplayFor(m => m.User.UserType)
+        </td>
+    </tr>
+
+</table>
+<br />
+
+<input type="button" value="Add a new position" onclick="addRow();"/>
+<input type="button" value="Add a new stage" onclick="addStage();"/>
+<input type="button" value="Save" onclick="saveBoard();"/>
+
+<div id="drag">
+<table id="tblBoard">
+    <tr>
+@foreach (var item in Model.Columns){
+        <th>
+            <img class="columnhandle" src="/Content/img/handle.png" width="20px" height="18px" />
+            <div class="editable">@item</div>
+            <input type="hidden" />
+        </th>
+    }
+    </tr>
+
+
+@*@foreach (var modelitem in Model.ClientUserGroup) {
+    <tr id="row_@(modelitem.RowIndex)">
+        <td id="Client_@(modelitem.RowIndex)_@(modelitem.Client.UserID)">
+            @Html.DisplayFor(modelItem => modelitem.Client.FirstName)
+        </td>
+        <td id="Job_@(modelitem.RowIndex)_@(modelitem.Job.JobID)">
+            @Html.DisplayFor(modelItem => modelitem.Job.Title)
+        </td>
+        @foreach (var colbit in modelitem.ColumnIndexBitmap) {
+        <td class="editable">
+            @if (colbit)
+            {
+                <div class="draggable editable">
+                @Html.DisplayFor(modelItem => modelitem.Applicant.Login)
+                </div>
+            }    
+        </td>
+        }
+        <td>
+            @Ajax.ActionLink("Search", "SearchUserForJob", "Recruiter1", new { recruiterID = Model.User.UserID, jobID = item.Job.JobID }, new AjaxOptions() { HttpMethod = "Get", UpdateTargetId = "divMain" })
+        </td>
+    </tr>
+}*@
+
+@foreach (var rowitem in Model.BoardContents) {
+    <tr id="@(rowitem.ID)">
+        @foreach (var citem in rowitem.ColumnContents)
+        {
+            if (citem.ColumnIndex == 0 || citem.ColumnIndex == 1)
+            {
+                <td id="@(citem.ID)">
+                    @Html.DisplayFor(c => citem.Content)
+                </td>
+            }
+            else if (String.IsNullOrEmpty(citem.Content))
+            {
+                <td id="@(citem.ID)" class="editable">
+                    @*<div class="editable" style="height: 20px; width: 50px">
+                        @Html.DisplayFor(c => citem.Content)
+                    </div>*@
+                </td>
+            }
+            else
+            {
+                <td id="@(citem.ID)">
+                    <div class="drag editable">
+                        @Html.DisplayFor(c => citem.Content)
+                    </div>
+                </td>
+            }
+        }
+    </tr>
+}
+
+</table>
+</div>
+
+@Html.ActionLink("Post Job", "PostJob", new {  username = Model.User.Login })

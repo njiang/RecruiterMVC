@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<publishData>
+  <publishProfile publishUrl="https://hirechannel.azurewebsites.net" deleteExistingFiles="False" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="hirechannel" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="Profile1" publishMethod="MSDeploy" replaceMatchingFiles="True" userName="jiangbuf@hotmail.com" savePWD="True" userPWD="AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAStc+GR+f0kubsWfiSpIMYgAAAAACAAAAAAADZgAAwAAAABAAAACD4+PygyJBUUeD8laddpMyAAAAAASAAACgAAAAEAAAAO6oM8JCgebCUOjW+rY5B1AYAAAA/Q+AWvUJNQv57r67PORsNSv1GkKi3d5FFAAAAGEmuMn627j+yd7o2AmDfc/xL7kE" SelectedForPublish="True" />
+</publishData>

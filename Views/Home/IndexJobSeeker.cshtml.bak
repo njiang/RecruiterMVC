@@ -1,0 +1,8 @@
+﻿@model TestHireChannelMVC.Models.JobSeekerModel
+
+@{
+    ViewBag.Title = "IndexJobSeeker";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>IndexJobSeeker</h2>

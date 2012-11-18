@@ -1,0 +1,55 @@
+﻿@model TestHireChannelMVC.Models.RecruiterJobSeeker.JobSeekerModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Job Seeker View</h2>
+
+<table>
+    <tr>
+        <th>
+            LastName
+        </th>
+        <th>
+            FirstName
+        </th>
+        <th>
+            LastLogin
+        </th>
+        <th>
+            LoginName
+        </th>
+        <th>
+            UserType
+        </th>
+        <th></th>
+    </tr>
+
+    <tr>
+        <td>
+            @Html.DisplayFor(m => m.User.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(m => m.User.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(m => m.User.LastLogin)
+        </td>
+        <td>
+            @Html.DisplayFor(m => m.User.Login)
+        </td>
+        <td>
+            @Html.DisplayFor(m => m.User.UserType)
+        </td>
+    </tr>
+
+    @Html.Partial("_AppliedJobs", Model)
+
+</table>
+
+
+
+
+

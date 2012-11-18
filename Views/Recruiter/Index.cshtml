@@ -1,0 +1,89 @@
+﻿@model TestHireChannelMVC.Models.RecruiterJobSeeker.RecruiterModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>UserView</h2>
+
+<table>
+    <tr>
+        <th>
+            LastName
+        </th>
+        <th>
+            FirstName
+        </th>
+        <th>
+            LastLogin
+        </th>
+        <th>
+            LoginName
+        </th>
+        <th>
+            UserType
+        </th>
+        <th></th>
+    </tr>
+
+    <tr>
+        <td>
+            @Html.DisplayFor(m => m.User.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(m => m.User.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(m => m.User.LastLogin)
+        </td>
+        <td>
+            @Html.DisplayFor(m => m.User.Login)
+        </td>
+        <td>
+            @Html.DisplayFor(m => m.User.UserType)
+        </td>
+    </tr>
+
+</table>
+
+<table>
+    <tr>
+        <th>
+            Job Title
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Skills
+        </th>
+    </tr>
+
+@foreach (var item in Model.JobModel) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Job.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Job.Description)
+        </td>
+        <td>
+        @foreach (var skill in item.Skills) {
+            <div>
+            @Html.DisplayFor(skillItem => skill.Skill)
+            </div>
+            <div>
+            @Html.DisplayFor(skillItem => skill.Year)
+            </div>
+        }
+        </td>
+    </tr>
+}
+
+</table>
+
+
+
+
+@Html.ActionLink("Post Job", "PostJob", "Recruiter")

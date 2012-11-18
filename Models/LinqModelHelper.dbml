@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Database2" Class="LinqModelHelperDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=.\SQLEXPRESS;AttachDbFilename=|DataDirectory|\Database2.mdf;Integrated Security=True;User Instance=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="Database2ConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.UserPinnedJobs" Member="UserPinnedJobs">
+    <Type Name="UserPinnedJob">
+      <Column Name="UserID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="JobID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Association Name="User_UserPinnedJob" Member="User" ThisKey="UserID" OtherKey="UserID" Type="User" IsForeignKey="true" />
+      <Association Name="Job_UserPinnedJob" Member="Job" ThisKey="JobID" OtherKey="JobID" Type="Job" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FollowRecruiters" Member="FollowRecruiters">
+    <Type Name="FollowRecruiter">
+      <Column Name="UserID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="RecruiterID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Association Name="User_FollowRecruiter" Member="User" ThisKey="UserID" OtherKey="UserID" Type="User" IsForeignKey="true" />
+      <Association Name="User_FollowRecruiter1" Member="User1" ThisKey="RecruiterID" OtherKey="UserID" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.JobSkills" Member="JobSkills">
+    <Type Name="JobSkill">
+      <Column Name="JobID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Skill" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Year" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="JobSkillID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Job_JobSkill" Member="Job" ThisKey="JobID" OtherKey="JobID" Type="Job" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UserSkills" Member="UserSkills">
+    <Type Name="UserSkill">
+      <Column Name="UserID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Skill" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Year" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UserSkillID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="User_UserSkill" Member="User" ThisKey="UserID" OtherKey="UserID" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.RecruiterPinnedUsers" Member="RecruiterPinnedUsers">
+    <Type Name="RecruiterPinnedUser">
+      <Column Name="RecruiterID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="UserID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="PinnedTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="LastScanTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="PinID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="JobID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Association Name="User_RecruiterPinnedUser" Member="User" ThisKey="RecruiterID" OtherKey="UserID" Type="User" IsForeignKey="true" />
+      <Association Name="User_RecruiterPinnedUser1" Member="User1" ThisKey="UserID" OtherKey="UserID" Type="User" IsForeignKey="true" />
+      <Association Name="Job_RecruiterPinnedUser" Member="Job" ThisKey="JobID" OtherKey="JobID" Type="Job" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.RecruiterBoards" Member="RecruiterBoards">
+    <Type Name="RecruiterBoard">
+      <Column Name="BoardID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="OwnerID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="CreateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="RecruiterBoard_JobBoardRow" Member="JobBoardRows" ThisKey="BoardID" OtherKey="BoardID" Type="JobBoardRow" />
+      <Association Name="User_RecruiterBoard" Member="User" ThisKey="OwnerID" OtherKey="UserID" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UserAppliedJobs" Member="UserAppliedJobs">
+    <Type Name="UserAppliedJob">
+      <Column Name="UserID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="JobID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="RetrieveTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="AppliedTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Stage" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Association Name="User_UserAppliedJob" Member="User" ThisKey="UserID" OtherKey="UserID" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Users" Member="Users">
+    <Type Name="User">
+      <Column Name="UserID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="LastName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Login" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="UserType" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="LastLogin" Type="System.DateTime" DbType="SmallDateTime" CanBeNull="true" />
+      <Column Name="Password" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="City" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="State" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Country" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Zip" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="WillingToRelocate" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="User_UserPinnedJob" Member="UserPinnedJobs" ThisKey="UserID" OtherKey="UserID" Type="UserPinnedJob" />
+      <Association Name="User_FollowRecruiter" Member="FollowRecruiters" ThisKey="UserID" OtherKey="UserID" Type="FollowRecruiter" />
+      <Association Name="User_FollowRecruiter1" Member="FollowRecruiters1" ThisKey="UserID" OtherKey="RecruiterID" Type="FollowRecruiter" />
+      <Association Name="User_UserSkill" Member="UserSkills" ThisKey="UserID" OtherKey="UserID" Type="UserSkill" />
+      <Association Name="User_RecruiterPinnedUser" Member="RecruiterPinnedUsers" ThisKey="UserID" OtherKey="RecruiterID" Type="RecruiterPinnedUser" />
+      <Association Name="User_RecruiterPinnedUser1" Member="RecruiterPinnedUsers1" ThisKey="UserID" OtherKey="UserID" Type="RecruiterPinnedUser" />
+      <Association Name="User_RecruiterBoard" Member="RecruiterBoards" ThisKey="UserID" OtherKey="OwnerID" Type="RecruiterBoard" />
+      <Association Name="User_UserAppliedJob" Member="UserAppliedJobs" ThisKey="UserID" OtherKey="UserID" Type="UserAppliedJob" />
+      <Association Name="User_Job" Member="Jobs" ThisKey="UserID" OtherKey="UserID" Type="Job" />
+      <Association Name="User_JobBoardRow" Member="JobBoardRows" ThisKey="UserID" OtherKey="ClientID" Type="JobBoardRow" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Jobs" Member="Jobs">
+    <Type Name="Job">
+      <Column Name="JobID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Employer" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="UserID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Status" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="PostDate" Type="System.DateTime" DbType="SmallDateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Type" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="Category" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="City" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="State" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Country" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ClientID" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Association Name="Job_UserPinnedJob" Member="UserPinnedJobs" ThisKey="JobID" OtherKey="JobID" Type="UserPinnedJob" />
+      <Association Name="Job_JobSkill" Member="JobSkills" ThisKey="JobID" OtherKey="JobID" Type="JobSkill" />
+      <Association Name="Job_RecruiterPinnedUser" Member="RecruiterPinnedUsers" ThisKey="JobID" OtherKey="JobID" Type="RecruiterPinnedUser" />
+      <Association Name="Job_JobBoardRow" Member="JobBoardRows" ThisKey="JobID" OtherKey="JobID" Type="JobBoardRow" />
+      <Association Name="User_Job" Member="User" ThisKey="UserID" OtherKey="UserID" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.BoardContents" Member="BoardContents">
+    <Type Name="BoardContent">
+      <Column Name="ColumnIndex" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Value" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="CellID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="RowID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Association Name="JobBoardRow_BoardContent" Member="JobBoardRow" ThisKey="RowID" OtherKey="RowID" Type="JobBoardRow" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.JobBoardRows" Member="JobBoardRows">
+    <Type Name="JobBoardRow">
+      <Column Name="RowID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ClientID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="JobID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="RowIndex" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="BoardID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Association Name="JobBoardRow_BoardContent" Member="BoardContents" ThisKey="RowID" OtherKey="RowID" Type="BoardContent" />
+      <Association Name="User_JobBoardRow" Member="User" ThisKey="ClientID" OtherKey="UserID" Type="User" IsForeignKey="true" />
+      <Association Name="Job_JobBoardRow" Member="Job" ThisKey="JobID" OtherKey="JobID" Type="Job" IsForeignKey="true" />
+      <Association Name="RecruiterBoard_JobBoardRow" Member="RecruiterBoard" ThisKey="BoardID" OtherKey="BoardID" Type="RecruiterBoard" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.BoardColumns" Member="BoardColumns">
+    <Type Name="BoardColumn">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="BoardID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="ColumnIndex" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+</Database>
